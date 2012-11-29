@@ -1,4 +1,6 @@
 from collections import deque
+from subprocess import Popen, PIPE
+import subprocess
 import sqlite3
 
 #################################Hard Config##################################
@@ -212,3 +214,16 @@ class Base(object):
         WHERE sample_id = ? AND agi_id = ?"""
 
         cur.close()
+
+
+
+def exe_path(exe):
+    which_command = "which"
+    proc = Popen([which_command, exe], stdout=PIPE, stderr=PIPE)
+    output, _ = proc.communicate()
+    path = output.strip()
+    if path is not None and path != "":
+        return path
+    else:
+        return None
+
